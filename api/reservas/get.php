@@ -47,8 +47,6 @@ if ($acao == ''){
     LEFT JOIN CADASTRO CA ON (CA.CADASTROID = RE.CADASTROID)
     WHERE CA.CADASTROID = {$param}
     ORDER BY DataEntrada DESC, HoraEntrada DESC";
-    
-    ///var_dump("Chegou aqui");
 
     $db = DB::connect();
     $rs = $db->prepare($sqlReserva);
@@ -82,11 +80,6 @@ if ($acao == ''){
 
     echo json_encode(["dados" => 'Reserva cancelada com sucesso']);
 
-    //if ($obj){
-    //    echo json_encode(["dados" => 'Reserva cancelada com sucesso']);       
-    // } else {
-    //    echo json_encode(["dados" => 'Erro ao cancelar reserva, tente novamente']);
-    //}  
 } else if ($acao == "visualizarResumo" && $param != ''){
     $sqlVisualizarResumo = "
         SELECT 
@@ -104,9 +97,7 @@ if ($acao == ''){
         LEFT JOIN fluxovaga FL ON (FL.ReservaId = RE.ReservaId) 
         LEFT JOIN carteira cc on (cc.CarteiraId = rr.CarteiraId)
         WHERE RE.ReservaId = {$param}";
-
-    //print_r($sqlVisualizarResumo);
-    
+            
     $db = DB::connect();
     $rs = $db->prepare($sqlVisualizarResumo);
     $rs->execute();

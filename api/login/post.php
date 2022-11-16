@@ -3,87 +3,12 @@
 if ($acao == ''){
      json_encode(['ERRO' => 'Caminho não encontrado!']);                
 } else if ($acao == "adiciona" && $param == '') {
-    //$sql = "INSERT INTO LOGIN (";
-
-    // $contadorCampos = 1;
-    // foreach (array_keys($_POST) as $indice => $value) {
-    //     if (count($_POST) > $contadorCampos){
-    //         $sql .= "{$value},";
-    //     } else {
-    //         $sql .= "{$value}";
-    //     }
-    //     $contadorCampos ++;
-    // }
-
-    // $sql .= ") VALUES (";
-
-    // $contadorValores = 1;
-    // foreach (array_values($_POST) as $indice => $value) {
-    //     //estruturaValoresInsert($value);
-    //     if ($contadorValores == 4){
-    //         if (count($_POST) > $contadorValores){
-    //             $sql .= "{$value},";
-    //         } else {
-    //             $sql .= "{$value}";
-    //         }
-    //     } else {
-    //         if (count($_POST) > $contadorValores){
-    //             $sql .= "'{$value}',";
-    //         } else {
-    //             $sql .= "'{$value}'";
-    //         }
-    //     }
-    //     $contadorValores ++;
-    //}
-
-    //$sql .= ")";
-
-    //echo "deu ruim caralho";
-
-    //echo json_encode ($_POST);
-    
-    // $db = DB::connect();
-    // $rs = $db->prepare($sql);
-    // $exec = $rs->execute();
-
-    // if ($exec){
-    //     echo json_encode(["dados" => 'Dados foram inseridos com sucesso!']);
-    // } else {
-    //     echo json_encode(["dados" => 'Não existem dados para retornar']);
-    // }
-    
-    //$jsonData = json_encode($_POST, JSON_FORCE_OBJECT);
-    //$jsonDados = json_decode($jsonData);
-    //echo $jsonData;
-    //insereLogin(json_encode($_POST));
-
-    //$data = json_decode(json_encode($_POST));
-    // $senha = "";
-    //$nome = "";
-
-    // foreach($data as $resultado) {
-    //     $nome = $resultado->name;
-    //     $senha = $resultado->password;
-    // }
-    //insereLogin($nome, $senha);
-    //print_r(json_encode($_POST));
 
     $dadosLogin = json_decode(file_get_contents('php://input'), true);
 
     $sqlCadastro = "INSERT INTO CADASTRO (";
     $sqlCadastro .= "Nome,NumeroTelefone,Cpf,NumeroCep,CidadeId,NumeroEndereco,Endereco,BairroEndereco,Complemento";
     if (is_array($dadosLogin)){
-        // $contadorCamposCadastro = 1;
-        // foreach (array_keys($dadosLogin) as $indice => $value) {
-        //     if ($contadorCamposCadastro > 3){
-        //         if (count($dadosLogin) > $contadorCamposCadastro){
-        //             $sqlCadastro .= "{$value},";
-        //         } else {
-        //             $sqlCadastro .= "{$value}";
-        //         }
-        //     }
-        //     $contadorCamposCadastro ++;
-        // }
 
         $sqlCadastro .= ") VALUES (";
 
@@ -106,7 +31,6 @@ if ($acao == ''){
     }
     $sqlCadastro .= ")";
 
-    //print_r($sqlCadastro);
     $dbCadastro = DB::connect();
     $rsCadastro = $dbCadastro->prepare($sqlCadastro);
     $execCadastro = $rsCadastro->execute();
@@ -118,12 +42,6 @@ if ($acao == ''){
     $objCadastrado = $rsCadastrado->fetchObject();
 
     $CadastroId = $objCadastrado->CadastroId;
-    
-    //print_r($CadastroId);
-
-    // $nome = "";
-    // $senha = "";
-    // $email = "";
 
     $sqlLogin = "INSERT INTO LOGIN(CadastroId,PermissaoId,NomeUsuario,Email,Senha) ";
     $sqlLogin  .= "VALUES(";
@@ -194,9 +112,7 @@ if ($acao == ''){
         }
         $sqlAtualizarLogin .= " WHERE LOGINID = " . $LoginId;
     }
-
-    //print_r($sqlAtualizarLogin);
-        
+     
     $db = DB::connect();
     $rs = $db->prepare($sqlAtualizarLogin);
     

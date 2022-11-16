@@ -113,49 +113,35 @@ if ($acao == ''){
             
             $sqlPagamentoAntecipado .= " VALUES ({$idCadastro},{$MetodosPagamentoId},'A',{$Valor},";
         }
-
-    
-        //print_r($sqlConfirmaReserva);
         
-
-        //$exec = $rsP->execute();
-                
-        // if ($obj){
-        //     echo json_encode('{
-        //         "Dados":{
-        //            "Retorno":"Reserva confirmada com sucesso.",
-        //            "Sucesso":"True"
-        //         }
-        //        }');    
-        // } else {
-        //     echo json_encode('{
-        //         "Dados":{
-        //            "Retorno":"Erro ao confirmar Reserva, tente novamente.",
-        //            "Sucesso":"False"
-        //         }
-        //        }');
-        // } 
-
-        if ($PagamentoAntecipado == 'S'){
+        if ($PagamentoAntecipado == 'S') {
+            
             $db = DB::connect();
-            $rs = $db->prepare("SELECT * FROM RESERVA WHERE  CADASTROID = {$paramCadastroId} ORDER BY DataEntrada DESC");
-            $rs->execute();
-            $obj = $rs->fetchObject(    );
+            $rs = $db->prepare($sqlConfirmaReserva);
 
-            if ($obj){
-                $sqlPagamentoAntecipado .= "{$obj->ReservaId}";
-
+            if ($rs->execute() == false){
+                echo json_encode(["dados" => $rsp->errorInfo()]);
+            } else {
                 $db = DB::connect();
-                $rs = $db->prepare($sqlPagamentoAntecipado);
+                $rs = $db->prepare("SELECT * FROM RESERVA WHERE  CADASTROID = {$paramCadastroId} ORDER BY DataEntrada DESC");
                 $rs->execute();
-
-                if ($rs->execute() == false){
-                    echo json_encode(["dados" => $rsp->errorInfo()]);
-                } else {
-                    echo json_encode(["dados" => 'Reserva confirmada com sucesso.']);
+                $obj = $rs->fetchObject(    );
+    
+                if ($obj){
+                    $sqlPagamentoAntecipado .= "{$obj->ReservaId}";
+    
+                    $db = DB::connect();
+                    $rs = $db->prepare($sqlPagamentoAntecipado);
+                    $rs->execute();
+    
+                    if ($rs->execute() == false){
+                        echo json_encode(["dados" => $rsp->errorInfo()]);
+                    } else {
+                        echo json_encode(["dados" => 'Reserva confirmada com sucesso.']);
+                    }
                 }
             }
-            
+
         } else {
 
             $db = DB::connect();
@@ -167,12 +153,4 @@ if ($acao == ''){
                 echo json_encode(["dados" => 'Reserva confirmada com sucesso.']);
             }
         }
-        
-        // else {
-        //     if ($exec){
-        //         echo json_encode(["dados" => 'Dados foram inseridos com sucesso!']);
-        //     } else {
-        //         echo json_encode(["dados" => 'Não existem dados para retornar']);
-        //     }
-        // }
 }

@@ -32,8 +32,6 @@ if ($acao == ''){
     }
     $sqlMetodoPagamentoInsert .= ")";
 
-    //print_r($sqlMetodoPagamentoInsert);
-
     $db = DB::connect();
     $rs = $db->prepare($sqlMetodoPagamentoInsert);
     $exec = $rs->execute();
@@ -95,9 +93,7 @@ if ($acao == ''){
 
         $sqlAtualizarMetodoPagamento .= " WHERE CARTEIRAID = " . $CarteiraId;
     }
-
-    ///print_r($sqlAtualizarMetodoPagamento);
-        
+    
     $db = DB::connect();
     $rs = $db->prepare($sqlAtualizarMetodoPagamento);
     

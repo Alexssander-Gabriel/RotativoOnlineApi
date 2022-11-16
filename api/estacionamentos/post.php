@@ -6,8 +6,6 @@ if ($acao == ''){
 
     $dadosVerificaEstacionamentoDisponivel = json_decode(file_get_contents('php://input'), true);
 
-
-
         $sqlEstacionamento = "
         Select 
             E.EstacionamentoId, E.NomeEstacionamento, E.BairroEndereco, E.Complemento, E.Email, E.Endereco, E.NumeroCep, E.NumeroEndereco, E.NumeroTelefone1, E.NumeroTelefone2, E.NumeroVagas, E.PrecoHora, E.PrecoLivre, E.Sobre,

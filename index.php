@@ -1,9 +1,5 @@
 <?php
-// if ($method == "PUT"){
-//     header("Access-Control-Allow-Origin: PUT");
-// } else {
-//     header("Access-Control-Allow-Origin: OPTIONS");
-// }
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Cache-Control, Pragma, Authorization, Accept, Accept-Encoding");
 header('Content-type: application/json');
@@ -16,27 +12,27 @@ if (isset($_GET['path'])) {
     echo "Caminho não existe"; exit;
 }
 
-if (isset($path[0])) {
- $api = $path[0];
+if (isset($path[1])) {
+ $api = $path[1];
 } else {
     echo "Caminho não existe";
 }
 
 
-if (isset($path[0])) { 
-    $api = $path[0];
+if (isset($path[1])) { 
+    $api = $path[1];
 } else {
     echo "Caminho não existe"; exit;
 } 
 
-if (isset($path[1])) { 
-    $acao = $path[1];
+if (isset($path[2])) { 
+    $acao = $path[2];
 } else {
     $acao = '';
 } 
 
-if (isset($path[2])) { 
-    $param = $path[2];
+if (isset($path[3])) { 
+    $param = $path[3];
 } else {
     $param = '';
 } 

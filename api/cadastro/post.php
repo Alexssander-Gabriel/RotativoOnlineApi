@@ -79,9 +79,7 @@ if ($acao == ''){
         $sqlAtualizarCadastro .= ", NumeroTelefone = '" . $NumeroTelefone . "'";
         $sqlAtualizarCadastro .=  " WHERE CADASTROID = " . $CadastroId;
     }
-
-    //print_r($sqlAtualizarCadastro);
-        
+    
     $db = DB::connect();
     $rs = $db->prepare($sqlAtualizarCadastro);
     
@@ -91,11 +89,5 @@ if ($acao == ''){
     } else {
         echo json_encode(["dados" => 'Cadastro atualizado com sucesso.']);
     }
-
-    // if ($exec){
-    //     echo json_encode(["dados" => 'Dados foram inseridos com sucesso!']);
-    // } else {
-    //     echo json_encode(["dados" => 'Não existem dados para retornar']);
-    // } 
 
 }

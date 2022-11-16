@@ -66,7 +66,7 @@ if ($acao == ''){
     $obj = $rs->fetchAll(PDO::FETCH_ASSOC);
             
     if ($obj){
-        echo json_encode(["dados" => 'Não é possível exluir um método de pagamento que já foi utilizado.']);      
+        echo json_encode($obj);      
     } else {
         echo json_encode(["dados" => 'Não existem dados para retornar']);
     } 
@@ -76,7 +76,7 @@ if ($acao == ''){
     $rs = $db->prepare("DELETE FROM CARTEIRA WHERE CARTEIRAID = {$param}");
 
     if ($rs->execute() == false){
-        echo json_encode(["dados" => rs->errorInfo()]);
+        echo json_encode(["dados" => $rs->errorInfo()]);
     } else {
         echo json_encode(["dados" => 'Método de pagamento excluido com sucesso.']);
     }

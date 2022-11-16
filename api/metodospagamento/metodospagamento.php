@@ -7,7 +7,5 @@ if ($api == 'metodospagamento'){
         include_once("post.php"); 
     } else if ($method == "PUT"){
         include_once("put.php");
-    } else if ($method == "DELETE"){
-        include_once("delete.php");
     }
 } 
