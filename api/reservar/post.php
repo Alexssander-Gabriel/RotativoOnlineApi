@@ -126,7 +126,7 @@ if ($acao == ''){
                 echo json_encode(["dados" => $rsp->errorInfo()]);
             } else {
                 $db = DB::connect();
-                $rs = $db->prepare("SELECT * FROM RESERVA WHERE  CADASTROID = {$paramCadastroId} ORDER BY DataEntrada DESC");
+                $rs = $db->prepare("SELECT * FROM RESERVA WHERE  CADASTROID = {$paramCadastroId} ORDER BY RESERVAID DESC");
                 $rs->execute();
                 $obj = $rs->fetchObject(    );
     
@@ -150,12 +150,13 @@ if ($acao == ''){
                     } else {
                         echo json_encode(["dados" => 'Reserva confirmada com sucesso.']);
                     }
+
                 } else {
                     echo json_encode(["dados" => 'Deu problema aqui,']);
                 }
             }
 
-        } else {
+        } else { 
 
             $db = DB::connect();
             $rs = $db->prepare($sqlConfirmaReserva);
