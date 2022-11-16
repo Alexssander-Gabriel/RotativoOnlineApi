@@ -114,7 +114,7 @@ if ($acao == ''){
             
             $sqlConfirmaReserva .= " Values ({$idCadastro}, '{$DataEntrada}', '{$DataSaida}', {$idEstacionamento}, '{$HoraEntrada}', '{$HoraSaida}', '{$Observacao}')";
         
-            $sqlPagamentoAntecipado .= " VALUES ({$FormaPagamentoId},'A',{$Valor},";
+            $sqlPagamentoAntecipado .= " VALUES ({$FormaPagamentoId},'F',{$Valor},";
         }
         
         if ($PagamentoAntecipado == 'S') {
