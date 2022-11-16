@@ -51,7 +51,7 @@ if ($acao == ''){
 
         $sqlConfirmaReserva = "INSERT INTO RESERVA(CadastroId, DataEntrada, DataSaida, EstacionamentoId, HoraEntrada, HoraSaida, Observacao)";
 
-        $sqlPagamentoAntecipado = "INSERT INTO RECEBER (CadastroId, CarteiraId, FormaPagamentoId, Status, Valor, ReservaId) ";
+        $sqlPagamentoAntecipado = "INSERT INTO RECEBER (CadastroId, FormaPagamentoId, Status, Valor, ReservaId) ";
         
         $PagamentoAntecipado = 'N';
         $paramCadastroId = 0;
@@ -95,6 +95,9 @@ if ($acao == ''){
 
             if (isset($dadosConfirmarReseva['MetodosPagamento']['CarteiraId'])){
                 $MetodosPagamentoId =  $dadosConfirmarReseva['MetodosPagamento']['CarteiraId'];
+                $sqlPagamentoAntecipado = "INSERT INTO RECEBER (FormaPagamentoId, Status, Valor, ReservaId,CarteiraId) ";
+            } else {
+                $sqlPagamentoAntecipado = "INSERT INTO RECEBER (FormaPagamentoId, Status, Valor, ReservaId) ";
             }
 
             if (isset($dadosConfirmarReseva['FormaPagamento']['FormaPagamentoId'])){
@@ -110,8 +113,8 @@ if ($acao == ''){
             }
             
             $sqlConfirmaReserva .= " Values ({$idCadastro}, '{$DataEntrada}', '{$DataSaida}', {$idEstacionamento}, '{$HoraEntrada}', '{$HoraSaida}', '{$Observacao}')";
-            
-            $sqlPagamentoAntecipado .= " VALUES ({$idCadastro},{$MetodosPagamentoId},'A',{$Valor},";
+        
+            $sqlPagamentoAntecipado .= " VALUES ({$FormaPagamentoId},'A',{$Valor},";
         }
         
         if ($PagamentoAntecipado == 'S') {
@@ -128,17 +131,27 @@ if ($acao == ''){
                 $obj = $rs->fetchObject(    );
     
                 if ($obj){
-                    $sqlPagamentoAntecipado .= "{$obj->ReservaId}";
+                    
+
+                    if ($MetodosPagamentoId != ''){
+                        $sqlPagamentoAntecipado .= "{$obj->ReservaId},{$MetodosPagamentoId})";
+                    } else {
+                        $sqlPagamentoAntecipado .= "{$obj->ReservaId})";
+                    }                    
+
+                    //print_r($sqlPagamentoAntecipado);
     
                     $db = DB::connect();
                     $rs = $db->prepare($sqlPagamentoAntecipado);
                     $rs->execute();
     
                     if ($rs->execute() == false){
-                        echo json_encode(["dados" => $rsp->errorInfo()]);
+                        echo json_encode(["dados" => $rs->errorInfo()]);
                     } else {
                         echo json_encode(["dados" => 'Reserva confirmada com sucesso.']);
                     }
+                } else {
+                    echo json_encode(["dados" => 'Deu problema aqui,']);
                 }
             }
 
