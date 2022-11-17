@@ -138,13 +138,10 @@ if ($acao == ''){
                     } else {
                         $sqlPagamentoAntecipado .= "{$obj->ReservaId})";
                     }                    
-
-                    //print_r($sqlPagamentoAntecipado);
-    
+                    
                     $db = DB::connect();
                     $rs = $db->prepare($sqlPagamentoAntecipado);
-                    $rs->execute();
-    
+
                     if ($rs->execute() == false){
                         echo json_encode(["dados" => $rs->errorInfo()]);
                     } else {
